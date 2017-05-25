@@ -1,0 +1,110 @@
+apply plugin: 'java'
+
+repositories {
+	maven {
+			url 'https://mvnrepository.com/artifact/'
+		}
+	mavenCentral()
+	
+}
+	sourceCompatibility = 1.7
+	targetCompatibility = 1.7
+
+version = '1.0-SNAPSHOT' 
+defaultTasks 'clean', 'buildRelease'
+
+dependencies { compile(
+	[group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.3'],
+	[group: 'commons-cli', name: 'commons-cli', version: '1.1'],
+	[group: 'commons-logging', name: 'commons-logging', version: '1.1.3'])
+	 compile \
+	 'org.apache.wink:wink-json4j:1.4'
+} 
+
+	dependencies {
+		testCompile 'junit:junit:4.8.2'
+	}
+	
+	sourceSets {
+		main {
+			java {
+				srcDir 'src'
+			}
+			resources {
+				srcDir 'src'
+			}
+		}
+		test {
+			java {
+				srcDir 'test'
+			}
+			resources {
+				srcDir 'test'
+			}
+		}
+	}
+
+	processResources {
+		from(projectDir) {
+			include 'META-INF/**'
+			include 'bundle.properties'
+		}
+	}
+	
+	group = 'com.ibm.appscan'
+	version = '1.0-SNAPSHOT'
+
+	
+	jar {	
+		manifest {
+			if((new File("$project.projectDir/META-INF/MANIFEST.MF")).exists()) {
+				from "$project.projectDir/META-INF/MANIFEST.MF"
+			}
+		}
+	}
+
+	test {
+		
+		//ignoreFailures = true //Uncomment this line to allow builds to succeed with failed unit tests.
+		reports.html.enabled = false
+		
+		//This is to avoid running test suites, so we don't run unit tests more than once.
+		exclude "**/*Tests.class"
+		exclude "**/*Suite.class"
+	}
+	
+	test.onlyIf {!project.hasProperty('skipTests')}
+
+sourceSets {
+		main {
+			java {
+				srcDir 'src'
+			}
+			resources {
+				srcDir 'src'
+			}
+		}
+		test {
+			java {
+				srcDir 'test'
+			}
+			resources {
+				srcDir 'test'
+			}
+		}
+	}
+	
+
+task runnableJar(type: Jar)  {	
+	manifest {
+        attributes 'Implementation-Title': 'Ifa Client',  
+        	'Implementation-Version': 1,
+        	'Main-Class': 'com.ibm.appscan.ifa.client.Runner'
+    }
+    archiveName = 'ifa-client.jar'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+	}
+
+task buildRelease (dependsOn: [subprojects.jar,runnableJar]) << {
+}
