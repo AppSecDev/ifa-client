@@ -1,3 +1,6 @@
+# IFA Server Documentation
+[On-line Documentation](http://www-01.ibm.com/support/docview.wss?uid=swg22004133)
+
 # ifa-client
 Client REST tool for Intelligent Finding Analytics (IFA) Server
 
