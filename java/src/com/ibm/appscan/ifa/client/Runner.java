@@ -63,7 +63,9 @@ public class Runner implements IProgressIfaListener{
 		o=new Option("t", "target-dir",true, Messages.getMessage("option.target"));
 		o.setArgName("DIR");
 		m_options.addOption(o);
-
+		o=new Option("f", "returned-file-name",true, Messages.getMessage("option.target.file.name"));
+		o.setArgName("FILE_NAME");
+		m_options.addOption(o);
 		o=new Option("s", "accept-self-signed",false, Messages.getMessage("option.invalid.cert"));
 		m_options.addOption(o);
 		g=new OptionGroup();
@@ -119,9 +121,12 @@ public class Runner implements IProgressIfaListener{
 			File target =null;
 			File f =null;
 			File baseline = null;
+			String target_file_name=null;
 			line= parser.parse(m_options, m_args);
 			ArrayList<String>hosts=new ArrayList<String>();
-			
+			if (line.hasOption("f")){
+				target_file_name= line.getOptionValue("f");
+			} 
 			if (line.hasOption("t")){
 				target= new File(line.getOptionValue("t"));
 				target.mkdirs();
@@ -176,7 +181,7 @@ public class Runner implements IProgressIfaListener{
 			}
 			if (ifa){
 				long start=System.currentTimeMillis();
-				s_action=new ApplyIfa(f,target,debug,allow_self_signed,hosts);
+				s_action=new ApplyIfa(f,target,target_file_name,debug,allow_self_signed,hosts);
 				File ifa_file=s_action.run().get(0);
 				System.out.println();
 				
@@ -193,13 +198,13 @@ public class Runner implements IProgressIfaListener{
 
 			if (delta_new){
 				long start=System.currentTimeMillis();
-				s_action=new DeltaNew(f, target, baseline,debug, allow_self_signed,hosts);
+				s_action=new DeltaNew(f, target,target_file_name, baseline,debug, allow_self_signed,hosts);
 				ArrayList<File> ret=s_action.run();
 				printDiffResults("diff.details.new",f, baseline, ret.get(0),start);
 			}
 			if (delta_resolved){
 				long start=System.currentTimeMillis();
-				s_action=new DeltaResolved(f, target, baseline,debug, allow_self_signed,hosts);
+				s_action=new DeltaResolved(f, target, target_file_name,baseline,debug, allow_self_signed,hosts);
 				ArrayList<File> ret=s_action.run();
 				printDiffResults("diff.details.resolved",f, baseline, ret.get(0),start);
 			}

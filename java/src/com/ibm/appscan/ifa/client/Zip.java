@@ -120,8 +120,8 @@ public class Zip {
 	 * or if one of the files is larger than {@value #MAX_SIZE} bytes
 	
 	 */
-	public static ArrayList<File> getUnzippedFile(File f, File target_dir) throws FileNotFoundException, IOException {
-		return getUnzippedFile(new FileInputStream(f), target_dir);
+	public static ArrayList<File> getUnzippedFile(File f, File target_dir, String target_name) throws FileNotFoundException, IOException {
+		return getUnzippedFile(new FileInputStream(f), target_dir, target_name);
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class Zip {
 	 * @throws IOException if more than {@value #MAX_ENTRIES} files are in the zip
 	 * or if one of the files is larger than {@value #MAX_SIZE} bytes
 	 */
-	public static ArrayList<File> getUnzippedFile(InputStream f, File target_dir) throws IOException {
+	public static ArrayList<File> getUnzippedFile(InputStream f, File target_dir, String target_name) throws IOException {
 		if (!target_dir.getAbsoluteFile().exists()){
 			target_dir.getAbsoluteFile().mkdirs();
 		}
@@ -150,12 +150,18 @@ public class Zip {
 			ZipEntry  e = null;
 
 			while((e=zip.getNextEntry())!=null) {
-				String name=e.getName();
-				if (name.contains("/")){
-					name=name.replace("/", File.separator);
+				String name=target_name;
+				if (target_name==null){
+					name=e.getName();
+					if (name.contains("/")){
+						name=name.replace("/", File.separator);
+					}
+					if (name.contains("\\")){
+						name=name.replace("\\", File.separator);
+					}
 				}
-				if (name.contains("\\")){
-					name=name.replace("\\", File.separator);
+				if (!name.endsWith(".ozasmt")){
+					name=name+".ozasmt";
 				}
 				//Make sure we are not path traversing here.
 				isValidFileName(name, ".");

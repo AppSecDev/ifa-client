@@ -24,8 +24,8 @@ import com.ibm.appscan.ifa.client.RequestMethods.REQUEST_TYPE;
 public class ApplyIfa extends IfaAction{
 
 	
-	public ApplyIfa(File f, File target_dir,boolean debug,boolean allow_self_signed,ArrayList<String> hosts) throws IfaClientException {
-		super(f, target_dir,debug,allow_self_signed, hosts);
+	public ApplyIfa(File f, File target_dir,String target_name,boolean debug,boolean allow_self_signed,ArrayList<String> hosts) throws IfaClientException {
+		super(f, target_dir,target_name,debug,allow_self_signed, hosts);
 	}
 
 	protected String getRestPath() {

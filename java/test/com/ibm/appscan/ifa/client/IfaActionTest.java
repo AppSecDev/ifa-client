@@ -23,12 +23,11 @@ public class IfaActionTest extends TestCase{
 		ArrayList<String>hosts=new ArrayList<String>();
 		hosts.add("htp://localhost:9080");
 		try {
-			new ApplyIfa(new File("."), null, _failed, _failed, hosts);
+			new ApplyIfa(new File("."), null,null, _failed, _failed, hosts);
 		} catch (Exception e){
 			_failed=true;
 		}
 		assertTrue(_failed);
-		
 	}
 	
 	@Test
@@ -37,7 +36,7 @@ public class IfaActionTest extends TestCase{
 		ArrayList<String>hosts=new ArrayList<String>();
 		hosts.add("http://:9080");
 		try {
-			new ApplyIfa(new File("."), null, _failed, _failed, hosts);
+			new ApplyIfa(new File("."), null,null, _failed, _failed, hosts);
 		} catch (Exception e){
 			_failed=true;
 		}
@@ -50,7 +49,7 @@ public class IfaActionTest extends TestCase{
 		ArrayList<String>hosts=new ArrayList<String>();
 		hosts.add("http://test:908000");
 		try {
-			new ApplyIfa(new File("."), null, _failed, _failed, hosts);
+			new ApplyIfa(new File("."), null, null,_failed, _failed, hosts);
 		} catch (Exception e){
 			_failed=true;
 		}
@@ -64,7 +63,7 @@ public class IfaActionTest extends TestCase{
 		ArrayList<String>hosts=new ArrayList<String>();
 		hosts.add("http://test");
 		try {
-			new ApplyIfa(new File("."), null, _failed, _failed, hosts);
+			new ApplyIfa(new File("."), null,null, _failed, _failed, hosts);
 		} catch (Exception e){
 			_failed=true;
 		}
@@ -78,7 +77,7 @@ public class IfaActionTest extends TestCase{
 		ArrayList<String>hosts=new ArrayList<String>();
 		hosts.add("http://localhost:9080");
 		try {
-			new ApplyIfa(new File("."), null, _failed, _failed, hosts);
+			new ApplyIfa(new File("."), null,null, _failed, _failed, hosts);
 		} catch (Exception e){
 			_failed=true;
 		}
@@ -90,7 +89,7 @@ public class IfaActionTest extends TestCase{
 		ArrayList<String>hosts=new ArrayList<String>();
 		hosts.add("http://localhost:9080");
 		try {
-			IfaAction a=new ApplyIfa(new File("."), null, _failed, _failed, hosts);
+			IfaAction a=new ApplyIfa(new File("."), null,null, _failed, _failed, hosts);
 			assertEquals(hosts.get(0)+"/", a.getHost());
 		} catch (Exception e){
 			_failed=true;
@@ -111,7 +110,7 @@ public class IfaActionTest extends TestCase{
 				found[i]=false;
 			}
 			for (int y=0;y<10;y++){
-				IfaAction a=new ApplyIfa(new File("."), null, _failed, _failed, hosts);
+				IfaAction a=new ApplyIfa(new File("."), null, null,_failed, _failed, hosts);
 				for (int i=0;i<hosts.size();i++){
 					if (a.getHost().equals(hosts.get(i))){
 						found[i]=true;

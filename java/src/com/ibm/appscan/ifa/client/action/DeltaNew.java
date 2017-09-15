@@ -12,10 +12,10 @@ import com.ibm.appscan.ifa.client.IfaClientException;
 
 public class DeltaNew extends Delta{
 
-	public DeltaNew(File f, File target_dir, File baseline, boolean debug,
+	public DeltaNew(File f, File target_dir, String target_name,File baseline, boolean debug,
 			boolean allow_self_signed, ArrayList<String> hosts)
 			throws IfaClientException {
-		super(f, target_dir, baseline, debug, allow_self_signed, hosts);
+		super(f, target_dir,target_name, baseline, debug, allow_self_signed, hosts);
 	}
 
 	@Override

@@ -24,8 +24,8 @@ public abstract class Delta extends IfaAction{
 
 	private File m_baseline;
 	private File m_temp;
-	public Delta(File f, File target_dir, File baseline,boolean debug,boolean allow_self_signed,ArrayList<String> hosts) throws IfaClientException {
-		super(f,target_dir,debug,allow_self_signed,hosts);
+	public Delta(File f, File target_dir,String target_name, File baseline,boolean debug,boolean allow_self_signed,ArrayList<String> hosts) throws IfaClientException {
+		super(f,target_dir,target_name,debug,allow_self_signed,hosts);
 		if (f.isDirectory()){
 			throw new IfaClientException(Messages.getMessage("err.diff.needs.file",f.getPath()));
 		}

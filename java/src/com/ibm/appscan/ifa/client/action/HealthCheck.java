@@ -18,7 +18,7 @@ public class HealthCheck extends IfaAction{
 
 	public HealthCheck(boolean allow_self_signed, ArrayList<String> hosts)
 			throws IfaClientException {
-		super(null, null, false, allow_self_signed, hosts);
+		super(null, null,null, false, allow_self_signed, hosts);
 	}
 
 	@Override

@@ -72,8 +72,13 @@ public abstract class IfaAction {
 	private int m_host_index=Integer.MAX_VALUE;
 	private boolean m_debug=false;
 	private boolean m_allow_self_signed=false;
-
-	public IfaAction(File f, File target_dir,boolean debug,boolean allow_self_signed,ArrayList<String> hosts) throws IfaClientException {
+	private String m_target_name;
+	public IfaAction(File f, 
+			File target_dir,
+			String target_name,
+			boolean debug,
+			boolean allow_self_signed,ArrayList<String> hosts) throws IfaClientException {
+		m_target_name=target_name;
 		setFile(f);
 		setTagetFile(target_dir);
 		if (getFile()!=null){
@@ -385,7 +390,7 @@ public abstract class IfaAction {
 		if (!job.hasError()){
 			HttpResponse response =getClient().execute(new HttpGet(job.getJobUrl()));
 			return Zip.getUnzippedFile(response.getEntity().getContent(), 
-					getTargetFile());
+					getTargetFile(), m_target_name);
 		}
 		throw new IfaClientException(job.getError());
 
